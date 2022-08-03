@@ -1,7 +1,7 @@
 {
-  "name": "ModUpdater",
+  "name": "Mod Updater",
   "assetdir": "frontend/build",
-  "outputfilename": "Mod Updater",
+  "outputfilename": "ModUpdater",
   "frontend:install": "npm install",
   "frontend:build": "npm run build",
   "wailsjsdir": "./frontend",
