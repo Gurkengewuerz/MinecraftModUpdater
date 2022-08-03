@@ -1,0 +1,12 @@
+{
+  "name": "ModUpdater",
+  "assetdir": "frontend/build",
+  "outputfilename": "Mod Updater",
+  "frontend:install": "npm install",
+  "frontend:build": "npm run build",
+  "wailsjsdir": "./frontend",
+  "author": {
+    "name": "Gurkengewuerz",
+    "email": "niklas@schuetrumpf.net"
+  }
+}

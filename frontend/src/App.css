@@ -1,0 +1,41 @@
+.layout {
+  height: 100%;
+}
+
+.ant-layout-header {
+  height: 40px;
+  line-height: 40px;
+}
+
+.nav-item {
+  padding: 0 1rem 0 1rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: inherit;
+}
+
+.nav-item:hover {
+  background: #333333;
+}
+
+.quit {
+  cursor: pointer;
+  padding: 0.4rem;
+  background: #393939;
+  border-radius: 0.2rem;
+  border: 0.2rem solid #333333;
+
+  -webkit-transition: background-color 400ms ease-out;
+  -moz-transition: background-color 400ms ease-out;
+  -o-transition: background-color 400ms ease-out;
+  transition: background-color 400ms ease-out;
+}
+
+.quit:hover {
+  background: #9d2626;
+
+  -webkit-transition: background-color 400ms ease-in;
+  -moz-transition: background-color 400ms ease-in;
+  -o-transition: background-color 400ms ease-in;
+  transition: background-color 400ms ease-in;
+}

@@ -1,0 +1,9 @@
+.subtitle {
+  width: 100%;
+  background: #333333;
+  padding: 0.1rem 0 0.1rem 0.7rem;
+}
+
+.subtitle.topMargin {
+  margin-top: 2rem;
+}

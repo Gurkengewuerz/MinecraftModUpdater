@@ -1,0 +1,28 @@
+name: Maven deploy
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v3
+        with:
+          go-version: '>=1.18.0'
+      - run: go version
+      - name: Get Wails
+        run: go install github.com/wailsapp/wails/v2/cmd/wails@latest
+      - name: Install Wails Build Dependencies
+        run: sudo apt-get install -y build-essential libgtk-3-dev libwebkit2gtk-4.0-dev npm pkg-config
+      - name: Wails Doctor
+        run: wails doctor
+      - name: Install Wails Build (Windows)
+        run: wails build -platform windows/amd64
+      - name: Install Wails Build (Linux)
+        run: wails build -platform linux/amd64
+      - uses: actions/upload-artifact@v3
+        with:
+          name: app
+          path: build/bin/*

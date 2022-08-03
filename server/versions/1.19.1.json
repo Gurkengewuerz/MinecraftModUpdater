@@ -1,0 +1,107 @@
+{
+  "_comment_name": "Launcher Profile Name; visible to users in Minecraft launcher",
+  "name": "TheTown v1.19.1",
+  "_comment_fabricLoader": "Fabric-Loader version which must match the current game version; fabricLoader profile is fetched from https://meta.fabricmc.net/",
+  "fabricLoader": "0.14.8",
+  "_comment_icon": "Any valid icon either internal Minecraft Launcher icons or base64 strings",
+  "icon": "Grass",
+  "_comment_mods": "Array List of all available mods",
+  "mods": [
+    {
+      "_comment_name": "Mod name; visible to users",
+      "name": "Fabric API",
+      "_comment_tooltip": "Optional tooltip text which is shown on hover",
+      "tooltip": "Schnittstelle für viele Mods",
+      "_comment_download": "Actual download url; be careful with pages like Curseforge",
+      "download": "https://github.com/FabricMC/fabric/releases/download/0.58.5%2B1.19.1/fabric-api-0.58.5+1.19.1.jar",
+      "_comment_depends": "dependencies got selected automatically and can't be deselected by the user; NOTE the dependency selection isn't recursive, so list all dependencies",
+      "depends": [],
+      "_comment_conflicts": "When any of the conflict mods is selected you cant select this mod",
+      "conflicts": [],
+      "_comment_default": "Should this mods be selected by default; also selects dependencies",
+      "default": false
+    },
+    {
+      "name": "Sodium",
+      "tooltip": "Optifine in cool",
+      "download": "https://github.com/CaffeineMC/sodium-fabric/releases/download/mc1.19-0.4.2/sodium-fabric-mc1.19-0.4.2+build.16.jar",
+      "depends": [],
+      "conflicts": [],
+      "default": true
+    },
+    {
+      "name": "Starlight",
+      "tooltip": "Light Engine redefined",
+      "download": "https://cdn.modrinth.com/data/H8CaAYZC/versions/1.1.1+1.19/starlight-1.1.1%2Bfabric.ae22326.jar",
+      "depends": [],
+      "conflicts": [],
+      "default": false
+    },
+    {
+      "name": "Iris",
+      "tooltip": "Shader Mod",
+      "download": "https://github.com/IrisShaders/Iris/releases/download/1.19.x-v1.2.6/iris-mc1.19.1-1.2.6.jar",
+      "depends": [
+        "Sodium"
+      ],
+      "conflicts": [],
+      "default": false
+    },
+    {
+      "name": "Cloth Config",
+      "download": "https://mediafiles.forgecdn.net/files/3906/387/cloth-config-8.0.75-fabric.jar",
+      "depends": [],
+      "conflicts": [],
+      "default": false
+    },
+    {
+      "name": "Mod Menu",
+      "download": "https://github.com/TerraformersMC/ModMenu/releases/download/v4.0.5/modmenu-4.0.5.jar",
+      "depends": [],
+      "conflicts": [],
+      "default": false
+    },
+    {
+      "name": "MinecraftClientEnhancements",
+      "download": "https://github.com/Gurkengewuerz/MinecraftClientEnhancements/releases/download/1.4-mc19/client-enhancements-1.4-mc19.jar",
+      "depends": [
+        "Fabric API",
+        "Cloth Config"
+      ],
+      "conflicts": [],
+      "default": true
+    },
+    {
+      "name": "World Edit CUI",
+      "download": "https://github.com/EngineHub/WorldEditCUI/releases/download/1.19%2B01/WorldEditCUI-1.19+01.jar",
+      "depends": [],
+      "conflicts": [],
+      "default": true
+    },
+    {
+      "name": "Dynamic FPS",
+      "download": "https://github.com/juliand665/Dynamic-FPS/releases/download/2.2.0/dynamic-fps-2.2.0.jar",
+      "depends": [],
+      "conflicts": [],
+      "default": false
+    },
+    {
+      "name": "Xaero's Minimap",
+      "download": "https://mediafiles.forgecdn.net/files/3907/320/Xaeros_Minimap_22.13.0_Fabric_1.19.1.jar",
+      "depends": [
+        "Fabric API"
+      ],
+      "conflicts": [],
+      "default": true
+    },
+    {
+      "name": "Xaero's World Map",
+      "download": "https://mediafiles.forgecdn.net/files/3907/341/XaerosWorldMap_1.26.2_Fabric_1.19.1.jar",
+      "depends": [
+        "Fabric API"
+      ],
+      "conflicts": [],
+      "default": true
+    }
+  ]
+}
