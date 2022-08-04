@@ -18,11 +18,17 @@ jobs:
         run: sudo apt-get install -y build-essential libgtk-3-dev libwebkit2gtk-4.0-dev npm pkg-config
       - name: Wails Doctor
         run: wails doctor
+      - name: Fetch current Version based on Frontend
+        run: |
+          echo "version=$(grep -oP '(?<=version: ")[^"]*' frontend/src/staticContent/index.js)" >> $GITHUB_ENV
+      - name: Update version for Output File
+        run: |
+          sed -i "s/dev/${{ env.version }}/g" wails.json
       - name: Install Wails Build (Windows)
         run: wails build -platform windows/amd64
       - name: Install Wails Build (Linux)
         run: wails build -platform linux/amd64
       - uses: actions/upload-artifact@v3
         with:
-          name: app
+          name: app-v${{ env.version }}
           path: build/bin/*
