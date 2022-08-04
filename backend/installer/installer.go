@@ -51,8 +51,8 @@ func (i *Installer) Start(args StartArguments) {
 		return
 	}
 
-	args.GeneratedFProfileName = fmt.Sprintf("%s-%s-%s", "fabric-loader", i.args.FabricVersion, i.args.GameVersion)
-	args.DirVersion = path.Clean(path.Join(i.args.MCDir, "versions"))
+	args.GeneratedFProfileName = fmt.Sprintf("%s-%s-%s", "fabric-loader", args.FabricVersion, args.GameVersion)
+	args.DirVersion = path.Clean(path.Join(args.MCDir, "versions"))
 	args.DirProfile = path.Clean(path.Join(args.DirVersion, args.GeneratedFProfileName))
 	args.FileProfileJson = path.Clean(path.Join(args.DirProfile, fmt.Sprintf("%s.json", args.GeneratedFProfileName)))
 
