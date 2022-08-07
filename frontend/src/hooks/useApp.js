@@ -195,6 +195,7 @@ const useApp = () => {
       mods: selectedMods,
       mcDir: minecraftPath,
       mcVersion: selectedVersion,
+      packFolder: versionConfig.packFolder || ".modupdater"
     });
   });
 

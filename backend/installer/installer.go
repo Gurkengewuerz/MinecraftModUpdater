@@ -9,6 +9,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path"
+	"strings"
 	"time"
 )
 
@@ -28,6 +29,7 @@ type StartArguments struct {
 	MCDir                 string `json:"mcDir"`
 	Icon                  string `json:"icon"`
 	Mods                  []Mod  `json:"mods"`
+	PackFolder            string `json:"packFolder"`
 	GeneratedFProfileName string `json:"-"`
 	DirVersion            string `json:"-"`
 	DirProfile            string `json:"-"`
@@ -173,7 +175,10 @@ func (i *Installer) installFabric(customDir string) error {
 		newProfile["icon"] = i.args.Icon
 	}
 
-	rawProfilesList[i.args.GeneratedFProfileName] = newProfile
+	profileKey := strings.ToLower(i.args.PackFolder)
+	profileKey = strings.ReplaceAll(profileKey, ".", "")
+	profileKey = strings.ReplaceAll(profileKey, " ", "_")
+	rawProfilesList[profileKey] = newProfile
 	rawProfiles["profiles"] = rawProfilesList
 
 	dataBytes, err := json.MarshalIndent(rawProfiles, "", "  ")
@@ -250,7 +255,7 @@ func (i *Installer) copyOptions(customDir string) error {
 }
 
 func (i *Installer) run() {
-	customDir := path.Clean(path.Join(i.args.MCDir, "..", ".modupdater"))
+	customDir := path.Clean(path.Join(i.args.MCDir, "..", i.args.PackFolder))
 	modDir := path.Clean(path.Join(customDir, "mods"))
 	err := os.MkdirAll(modDir, 0755)
 	if err != nil {
