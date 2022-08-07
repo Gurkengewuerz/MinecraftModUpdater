@@ -124,8 +124,8 @@ const Update = () => {
             filterSort={(optionA, optionB) => optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())}
           >
             {appContext.versions.map(ver => (
-              <Option key={ver} value={ver}>
-                {ver}
+              <Option key={ver.name} value={ver.version}>
+                {ver.name || ver.version}
               </Option>
             ))}
           </Select>
