@@ -228,28 +228,28 @@ func (i *Installer) cleanupMods(modDir string) error {
 	return nil
 }
 
-func (i *Installer) copyOptions(customDir string) error {
-	origOptions := path.Clean(path.Join(i.args.MCDir, "options.txt"))
-	if _, err := os.Stat(origOptions); errors.Is(err, os.ErrNotExist) {
+func (i *Installer) copyFromOrig(customDir string, file string) error {
+	orig := path.Clean(path.Join(i.args.MCDir, file))
+	if _, err := os.Stat(orig); errors.Is(err, os.ErrNotExist) {
 		return err
 	}
 
-	customOptions := path.Clean(path.Join(customDir, "options.txt"))
-	if _, err := os.Stat(customOptions); errors.Is(err, os.ErrNotExist) {
-		bytesRead, err := ioutil.ReadFile(origOptions)
+	custom := path.Clean(path.Join(customDir, file))
+	if _, err := os.Stat(custom); errors.Is(err, os.ErrNotExist) {
+		bytesRead, err := ioutil.ReadFile(orig)
 		if err != nil {
-			runtime.LogErrorf(i.ctx, "Failed to read original options.txt from %s", origOptions)
+			runtime.LogErrorf(i.ctx, "Failed to read original %s from %s", file, orig)
 			return err
 		}
 
-		err = ioutil.WriteFile(customOptions, bytesRead, 0755)
+		err = ioutil.WriteFile(custom, bytesRead, 0755)
 		if err != nil {
-			runtime.LogErrorf(i.ctx, "Failed to write new options.txt to %s", customOptions)
+			runtime.LogErrorf(i.ctx, "Failed to write new %s to %s", file, custom)
 			return err
 		}
-		runtime.LogInfo(i.ctx, "Copied options.txt")
+		runtime.LogInfof(i.ctx, "Copied %s", file)
 	} else {
-		runtime.LogInfo(i.ctx, "Skipping options.txt copy. Already exists")
+		runtime.LogInfof(i.ctx, "Skipping %s copy. Already exists", file)
 	}
 	return nil
 }
@@ -265,7 +265,8 @@ func (i *Installer) run() {
 		runtime.LogErrorf(i.ctx, "Failed to create mod dir %s", modDir)
 		return
 	}
-	_ = i.copyOptions(customDir)
+	_ = i.copyFromOrig(customDir, "options.txt")
+	_ = i.copyFromOrig(customDir, "servers.dat")
 
 	modLen := len(i.args.Mods)
 	index := 0
