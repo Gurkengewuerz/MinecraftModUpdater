@@ -1,6 +1,8 @@
 {
   "_comment_name": "Launcher Profile Name; visible to users in Minecraft launcher",
   "name": "TheTown v1.19.1",
+  "_comment_packFolder": "Folder for this profile in %APPDATA% - is also used to overwrite gameversion, reuse same packFolder for update",
+  "packFolder": ".modupdater",
   "_comment_fabricLoader": "Fabric-Loader version which must match the current game version; fabricLoader profile is fetched from https://meta.fabricmc.net/",
   "fabricLoader": "0.14.8",
   "_comment_icon": "Any valid icon either internal Minecraft Launcher icons or base64 strings",

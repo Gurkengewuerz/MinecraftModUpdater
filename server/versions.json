@@ -3,6 +3,9 @@
     "version": "1.0.0"
   },
   "versions": [
-    "1.19.1"
+    {
+      "version": "1.19.1",
+      "name": "My super cool Modpack"
+    }
   ]
 }
