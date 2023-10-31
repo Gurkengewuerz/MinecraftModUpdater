@@ -4,7 +4,6 @@ import {parse} from "marked";
 import {useCallback, useEffect, useState} from "react";
 import cmp from "semver-compare";
 
-import http from "../http";
 import staticContent from "../staticContent";
 
 const useApp = () => {
@@ -57,7 +56,7 @@ const useApp = () => {
   const fetchVersions = useCallback(async () => {
     setLoading(true);
 
-    const res = await http.get(`/versions.json?ts=${new Date().getTime()}`);
+    const res = await fetch(staticContent.api+ `/versions.json?ts=${new Date().getTime()}`);
     const statusCode = res.status;
     if (statusCode !== 200) {
       const err = {name: "HTTPException", message: "Fehler beim Abrufen der Versionen"};
@@ -65,11 +64,12 @@ const useApp = () => {
       setLoading(false);
       throw err;
     }
-    const availableVersions = res.data.versions;
+    const data = await res.json();
+    const availableVersions = data.versions;
     warpWailsLog(LogInfo, `Fetched ${availableVersions.length} versions`);
 
     if (versions.length === 0) {
-      const newVer = res.data.updater.version;
+      const newVer = data.updater.version;
       if (!staticContent.version.includes("-") && cmp(newVer, staticContent.version) === 1) {
         notification("info", "Neues Update", `Ein Update auf v${newVer} steht bereit`);
       }
@@ -82,7 +82,7 @@ const useApp = () => {
   const fetchVersionConfig = useCallback(async version => {
     setLoading(true);
 
-    const res = await http.get(`/versions/${version}.json?ts=${new Date().getTime()}`);
+    const res = await fetch(staticContent.api+`/versions/${version}.json?ts=${new Date().getTime()}`);
     const statusCode = res.status;
     if (statusCode !== 200) {
       const err = {
@@ -93,9 +93,10 @@ const useApp = () => {
       setLoading(false);
       throw err;
     }
-    warpWailsLog(LogInfo, `Fetched versionConfig for version ${version} with ${res.data.mods.length} mods`);
+    const data = await res.json();
+    warpWailsLog(LogInfo, `Fetched versionConfig for version ${version} with ${data.mods.length} mods`);
     setLoading(false);
-    return res.data;
+    return data;
   });
 
   const selectVersion = useCallback(async version => {
@@ -215,15 +216,16 @@ const useApp = () => {
   const getChangelog = useCallback(async () => {
     const now = new Date().getTime();
     if (now - changelog.lastChanged < 5 * 60 * 1000) return;
-    const res = await http.get("/changelog.md?ts=${new Date().getTime()}");
+    const res = await fetch(staticContent.api + "/changelog.md?ts=${new Date().getTime()}");
     const statusCode = res.status;
     if (statusCode !== 200) {
       const err = {name: "HTTPException", message: "Fehler beim Abrufen des Changelogs"};
       warpWailsLog(LogError, JSON.stringify(err));
       throw err;
     }
+    const data = await res.text();
     warpWailsLog(LogInfo, `Fetched Changelog successfully`);
-    const parsedData = DOMPurify.sanitize(parse(res.data));
+    const parsedData = DOMPurify.sanitize(parse(data));
     setChangelog({
       ...changelog,
       data: parsedData,
