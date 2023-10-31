@@ -5,6 +5,7 @@
 .ant-layout-header {
   height: 40px;
   line-height: 40px;
+  --wails-draggable: drag
 }
 
 .nav-item {

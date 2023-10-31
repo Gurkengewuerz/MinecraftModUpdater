@@ -2,8 +2,13 @@ package main
 
 import (
 	"embed"
+	"fmt"
 	"github.com/Gurkengewuerz/modupdater/backend"
+	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
 	"log"
+	"net/http"
+	"os"
+	"strings"
 
 	"github.com/wailsapp/wails/v2/pkg/options/mac"
 
@@ -18,6 +23,27 @@ var assets embed.FS
 
 //go:embed build/appicon.png
 var icon []byte
+
+type FileLoader struct {
+	http.Handler
+}
+
+func NewFileLoader() *FileLoader {
+	return &FileLoader{}
+}
+
+func (h *FileLoader) ServeHTTP(res http.ResponseWriter, req *http.Request) {
+	var err error
+	requestedFilename := strings.TrimPrefix(req.URL.Path, "/")
+	println("Requesting file:", requestedFilename)
+	fileData, err := os.ReadFile(requestedFilename)
+	if err != nil {
+		res.WriteHeader(http.StatusBadRequest)
+		res.Write([]byte(fmt.Sprintf("Could not load file %s", requestedFilename)))
+	}
+
+	res.Write(fileData)
+}
 
 func main() {
 	// Create an instance of the app structure
@@ -38,11 +64,14 @@ func main() {
 		StartHidden:       false,
 		HideWindowOnClose: false,
 		BackgroundColour:  &options.RGBA{R: 255, G: 255, B: 255, A: 255},
-		Assets:            assets,
-		LogLevel:          logger.DEBUG,
-		OnStartup:         app.Startup,
-		OnDomReady:        app.DOMReady,
-		OnShutdown:        app.Shutdown,
+		AssetServer: &assetserver.Options{
+			Assets:  assets,
+			Handler: NewFileLoader(),
+		},
+		LogLevel:   logger.DEBUG,
+		OnStartup:  app.Startup,
+		OnDomReady: app.DOMReady,
+		OnShutdown: app.Shutdown,
 		Bind: []interface{}{
 			app,
 		},
