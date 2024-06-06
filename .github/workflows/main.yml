@@ -28,7 +28,7 @@ jobs:
         run: wails build -platform windows/amd64
       - name: Install Wails Build (Linux)
         run: wails build -platform linux/amd64
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: app-v${{ env.version }}
           path: build/bin/*
